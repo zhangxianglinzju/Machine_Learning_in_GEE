@@ -122,3 +122,14 @@ var landsatCombinationWithNDVI = landsatCombination.map(calcIndex);
 // maximal NDVI method
 var maxNDVI = landsatCombinationWithNDVI.qualityMosaic('NDVI').select(['blue', 'green', 'red', 'nir', 'swir1', 'swir2', "NDVI", "EVI", "BSI", "NBR2"])
                                         .set('system:time_start', ee.Date('2019-01-01').millis()).clip(roi);
+
+// display the composite
+// define the display parameters
+var visualization = {
+  bands: ['red', 'green', 'blue'],
+  min: 0.0,
+  max: 0.3};
+
+Map.centerObject(roi, 6);
+Map.addLayer(maxNDVI, visualization, 'Maximal NDVI composite');
+Map.addLayer(biomassPrediction, visualizationBiomass, 'Predicted Biomass in 2019');
